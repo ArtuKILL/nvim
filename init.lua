@@ -35,5 +35,14 @@ dofile(vim.g.base46_cache .. "statusline")
 require "nvchad.autocmds"
 
 vim.schedule(function()
-  require "mappings"
+  local map = vim.keymap.set
+  local mappings = require "mappings"
+  for name, maps in pairs(mappings) do
+    for mode, data in pairs(maps) do
+      for key, value in pairs(data) do
+        map(mode, key, value[1], { desc = name .. " " .. value[2] })
+      end
+    end
+  end
 end)
+require 'myinit'
