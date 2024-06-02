@@ -33,7 +33,21 @@ M.markdown = {
   n = {
     ["<leader>mia"] = { "<cmd> MDListItemAbove <CR>", "Insert item in list above" },
     ["<leader>mib"] = { "<cmd> MDListItemBelow <CR>", "Insert item in list below" },
-    ["<leader>mit"] = { "<cmd> EasyTablesCreateNew <CR>", "Create a new table and insert" }
+    ["<leader>met"] = { "<cmd> ExportTable <CR>", "Export table" },
+    ["<leader>mit"] = { "<cmd> EasyTablesImportThisTable <CR>", "Edit current table" },
+    ["<leader>mct"] = {
+      function()
+        local input = vim.fn.input "Table dimensions: "
+        local pattern = "(%d%d?)[%sxX](%d%d?)"
+        local rows, columns = string.match(input, pattern)
+        if (not (rows and colums)) then
+          print("Error with input!")
+        end
+        local command = string.format("EasyTablesCreateNew %sx%s", columns, rows)
+        vim.cmd(command)
+      end,
+      "Create a new table to insert need to call ExportTable"
+    }
   }
 }
 
